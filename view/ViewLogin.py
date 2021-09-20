@@ -15,7 +15,7 @@ class ViewLogin:
         )
 
         self.image_image_1 = PhotoImage(
-            file=relative_to_assets("loginbg.png"))
+            file=relative_to_assets("mainbg.png"))
         self.image_1 = self.canvasLogin.create_image(
             640.0,
             384.0,
@@ -162,6 +162,7 @@ class ViewLogin:
     def clearEntrys(self):
         self.usernameEntry.delete(0, 'end')
         self.passwordEntry.delete(0, 'end')
+        self.loginError("clear")
 
     def showLogin(self):
         self.canvasLogin.place(x=0, y=0)
@@ -176,6 +177,8 @@ class ViewLogin:
         elif errortype == "WU":
             self.canvasLogin.itemconfigure("errorlb", text="Usuário e/ou senha incorreto(s)!")
 
+        elif errortype == "clear":
+            self.canvasLogin.itemconfigure("errorlb", text="")
+
         else:
-            self.canvasLogin.itemconfigure("errorlb",
-                                           text="Erro desconhecido, entre em contato com o administrador do sistema!")
+            self.canvasLogin.itemconfigure("errorlb", text="Erro desconhecido, entre em contato com o administrador do sistema!")
