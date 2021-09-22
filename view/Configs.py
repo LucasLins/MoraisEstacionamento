@@ -1,5 +1,6 @@
 import tkinter
 from tkinter import *
+from tkinter.ttk import Combobox
 from pathlib import Path
 
 OUTPUT_PATH = Path(__file__).parent

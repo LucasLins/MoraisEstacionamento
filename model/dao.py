@@ -1,4 +1,5 @@
 import dataset
+from sqlalchemy import false, true
 from stuf import stuf
 
 db = dataset.connect('postgresql://postgres:2967@localhost:5432/MoraisEstacionamento', row_type=stuf)
@@ -30,3 +31,5 @@ def dictRegistroEntrada(parkingId, employeeId, vehiclePlate, vehicleType, inDate
 
 def dictRegistroSaida(regId, outDate, payValue):
     return dict(id=regId, datasaida=outDate, valorpagar=payValue, pago=True)
+
+
