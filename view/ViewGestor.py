@@ -520,3 +520,274 @@ class GestorAddF:
     def showError(self, message):
         self.canvasGestorAddEmp.itemconfigure("errormsg", state="normal", text=message)
         self.canvasGestorAddEmp.itemconfigure("errorbg", state="normal")
+        
+
+class GestorAddE:
+    def __init__(self):
+        self.canvasGestorAddE = Canvas(
+            window,
+            bg="#FFFFFF",
+            height=768,
+            width=1280,
+            bd=0,
+            highlightthickness=0,
+            relief="ridge"
+        )
+
+        self.image_image_1 = PhotoImage(
+            file=relative_to_assets("mainbg.png"))
+        self.image_1 = self.canvasGestorAddE.create_image(
+            640.0,
+            384.0,
+            image=self.image_image_1
+        )
+
+        self.image_image_2 = PhotoImage(
+            file=relative_to_assets("bg2.png"))
+        self.image_2 = self.canvasGestorAddE.create_image(
+            640.0,
+            384.0,
+            image=self.image_image_2
+        )
+
+        self.image_image_3 = PhotoImage(
+            file=relative_to_assets("bgAddE.png"))
+        self.image_3 = self.canvasGestorAddE.create_image(
+            772.0,
+            155.0,
+            image=self.image_image_3
+        )
+
+        self.canvasGestorAddE.create_text(
+            449.0,
+            60.0,
+            anchor="nw",
+            text="Dados do Estacionamento",
+            fill="#413D4B",
+            font=("Poppins Regular", 24 * -1)
+        )
+
+        self.image_image_4 = PhotoImage(
+            file=relative_to_assets("entryBGNameE.png"))
+        self.image_4 = self.canvasGestorAddE.create_image(
+            559.0,
+            154.0,
+            image=self.image_image_4
+        )
+
+        self.entry_image_1 = PhotoImage(
+            file=relative_to_assets("entryNameE.png"))
+        self.entry_bg_1 = self.canvasGestorAddE.create_image(
+            559.0,
+            148.0,
+            image=self.entry_image_1
+        )
+        self.entryPName = Entry(
+            self.canvasGestorAddE,
+            bd=0,
+            bg="#E2F1FF",
+            highlightthickness=0
+        )
+        self.entryPName.place(
+            x=449.0,
+            y=136.0,
+            width=220.0,
+            height=22.0
+        )
+
+        self.image_image_5 = PhotoImage(
+            file=relative_to_assets("entryBGCPC.png"))
+        self.image_5 = self.canvasGestorAddE.create_image(
+            720.0,
+            154.0,
+            image=self.image_image_5
+        )
+
+        self. entry_image_2 = PhotoImage(
+            file=relative_to_assets("entryCPC.png"))
+        self.entry_bg_2 = self.canvasGestorAddE.create_image(
+            720.5,
+            148.0,
+            image=self.entry_image_2
+        )
+        self.entryCPCar = Entry(
+            self.canvasGestorAddE,
+            bd=0,
+            bg="#E2F1FF",
+            highlightthickness=0
+        )
+        self.entryCPCar.place(
+            x=688.0,
+            y=136.0,
+            width=65.0,
+            height=22.0
+        )
+
+        self.image_image_6 = PhotoImage(
+            file=relative_to_assets("entryBGCPB.png"))
+        self.image_6 = self.canvasGestorAddE.create_image(
+            792.0,
+            154.0 + 3,
+            image=self.image_image_6
+        )
+
+        self.entry_image_3 = PhotoImage(
+            file=relative_to_assets("entryCPB.png"))
+        self.entry_bg_3 = self.canvasGestorAddE.create_image(
+            792.5,
+            148.0,
+            image=self.entry_image_3
+        )
+        self.entryCPBike = Entry(
+            self.canvasGestorAddE,
+            bd=0,
+            bg="#E2F1FF",
+            highlightthickness=0
+        )
+        self.entryCPBike.place(
+            x=760.0,
+            y=136.0,
+            width=65.0,
+            height=22.0
+        )
+
+        self.image_image_7 = PhotoImage(
+            file=relative_to_assets("entryBGCPT.png"))
+        self.image_7 = self.canvasGestorAddE.create_image(
+            864.0,
+            154.0 + 3,
+            image=self.image_image_7
+        )
+
+        self.entry_image_4 = PhotoImage(
+            file=relative_to_assets("entryCPT.png"))
+        self.entry_bg_4 = self.canvasGestorAddE.create_image(
+            864.5,
+            148.0,
+            image=self.entry_image_4
+        )
+        self.entryCPTruck = Entry(
+            self.canvasGestorAddE,
+            bd=0,
+            bg="#E2F1FF",
+            highlightthickness=0
+        )
+        self.entryCPTruck.place(
+            x=832.0,
+            y=136.0,
+            width=65.0,
+            height=22.0
+        )
+
+        self.image_image_8 = PhotoImage(
+            file=relative_to_assets("entryBGTax.png"))
+        self.image_8 = self.canvasGestorAddE.create_image(
+            948.0,
+            154.0 + 1,
+            image=self.image_image_8
+        )
+
+        self.entry_image_5 = PhotoImage(
+            file=relative_to_assets("entryTax.png"))
+        self.entry_bg_5 = self.canvasGestorAddE.create_image(
+            948.0,
+            148.0,
+            image=self.entry_image_5
+        )
+        self.entryTax = Entry(
+            self.canvasGestorAddE,
+            bd=0,
+            bg="#E2F1FF",
+            highlightthickness=0
+        )
+        self.entryTax.place(
+            x=916.0,
+            y=136.0,
+            width=64.0,
+            height=22.0
+        )
+
+        self.button_image_1 = PhotoImage(
+            file=relative_to_assets("btnAddE.png"))
+        self.btnAddE = Button(
+            self.canvasGestorAddE,
+            image=self.button_image_1,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: print("button_1 clicked"),
+            relief="flat"
+        )
+        self.btnAddE.place(
+            x=1060.0,
+            y=114.0,
+            width=60.0,
+            height=60.0
+        )
+
+        self.button_image_2 = PhotoImage(
+            file=relative_to_assets("btnReturnAddE.png"))
+        self.btnReturnAddE = Button(
+            self.canvasGestorAddE,
+            image=self.button_image_2,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: print("button_2 clicked"),
+            relief="flat"
+        )
+        self.btnReturnAddE.place(
+            x=137.0,
+            y=60.0,
+            width=255.0,
+            height=76.0
+        )
+
+        self.image_image_9 = PhotoImage(
+            file=relative_to_assets("bgErrorAddE.png"))
+        self.image_9 = self.canvasGestorAddE.create_image(
+            687.0,
+            215.0,
+            tag="errorbg",
+            state="hidden",
+            image=self.image_image_9
+        )
+
+        self.canvasGestorAddE.create_text(
+            491.0,
+            206.0,
+            anchor="nw",
+            tag="errormsg",
+            text="Erro",
+            state="hidden",
+            fill="#852019",
+            font=("Poppins Regular", 14 * -1)
+        )
+
+        self.image_image_10 = PhotoImage(
+            file=relative_to_assets("bgSuccessBgE.png"))
+        self.image_10 = self.canvasGestorAddE.create_image(
+            687.0,
+            215.0,
+            tag="successmsg",
+            state="hidden",
+            image=self.image_image_10
+        )
+
+    def hideGestorAddE(self):
+        self.canvasGestorAddE.place_forget()
+
+    def showGestorAddE(self):
+        self.canvasGestorAddE.place(x=0,y=0)
+
+    def clearEntrys(self):
+        self.entryPName.delete(0, 'end')
+        self.entryCPCar.delete(0, 'end')
+        self.entryCPBike.delete(0, 'end')
+        self.entryCPTruck.delete(0, 'end')
+        self.entryTax.delete(0, 'end')
+        self.canvasGestorAddE.itemconfigure("successmsg", state="hidden")
+        self.canvasGestorAddE.itemconfigure("errormsg", state="hidden")
+        self.canvasGestorAddE.itemconfigure("errorbg", state="hidden")
+
+    def showError(self, message):
+        self.canvasGestorAddE.itemconfigure("errorbg", state="normal")
+        self.canvasGestorAddE.itemconfigure("errormsg", state="normal", text=message)

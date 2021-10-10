@@ -98,6 +98,16 @@ class Conta:
         self.data = tableContas.find_one(usuario=user)
         return self.data.id
 
+    def verifyParking(self, name):
+        self.data = tableEstacionamentos.find_one(nome=name)
+        if self.data != None:
+            return True
+        else:
+            return False
+
     def addEmployee(self, username, password, name, cpf, email, phone, gender, parking):
         tableContas.insert(dictConta(username, password, "F"))
         tableFuncionarios.insert(dictFuncionario(self.getAccountID(username), self.getParkingID(parking), name, gender, cpf, phone, email))
+
+    def addParking(self, name, cpC, cpB, cpT, tax):
+        tableEstacionamentos.insert(dictEstacionamento(name, cpC, cpB, cpT, tax, cpC, cpB, cpT))

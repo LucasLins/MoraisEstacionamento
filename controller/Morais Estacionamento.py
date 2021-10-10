@@ -13,6 +13,7 @@ class Controller:
         self.pageFuncionarioCarOUT = FuncionarioCarOUT()
         self.pageGestorHome = GestorHome()
         self.pageGestorAddF = GestorAddF()
+        self.pageGestorAddE = GestorAddE()
         self.user = Conta()
 
     def startApp(self):
@@ -27,6 +28,7 @@ class Controller:
         self.pageFuncionarioCarOUT.hideFuncionarioCarOUT()
         self.pageGestorHome.hideGestorHome()
         self.pageGestorAddF.hideGestorAddF()
+        self.pageGestorAddE.hideGestorAddE()
 
     def btnConfigs(self):
         # Login
@@ -51,13 +53,18 @@ class Controller:
         # Gestor Home
         app.pageGestorHome.btnLogoutG.config(command=lambda: app.logout())
         app.pageGestorHome.btnAddEmployee.config(command=lambda: app.loadGestorAddF())
-        app.pageGestorHome.btnAddParking.config(command=lambda: app.logout())
+        app.pageGestorHome.btnAddParking.config(command=lambda: app.pageGestorAddE.showGestorAddE())
         app.pageGestorHome.btnManageParking.config(command=lambda: app.logout())
         app.pageGestorHome.btnReports.config(command=lambda: app.logout())
 
         # Gestor Add Funcionário
         app.pageGestorAddF.btnReturn.config(command=lambda: app.returnGHome())
         app.pageGestorAddF.btnAddFuncionario.config(command=lambda: app.addFuncionario())
+
+        # Gestor Add Estacionamento
+        app.pageGestorAddE.btnReturnAddE.config(command=lambda: app.returnGHome())
+        app.pageGestorAddE.btnAddE.config(command=lambda: app.addParking())
+
 
     def validateLogin(self):
         if self.pageLogin.usernameEntry.get() == "" or self.pageLogin.passwordEntry.get() == "":
@@ -150,6 +157,8 @@ class Controller:
         self.loadGestorHomeData()
         self.pageGestorHome.showGestorHome()
         self.pageGestorAddF.clearEntrys()
+        self.pageGestorAddE.clearEntrys()
+
 
     def validateRecordInsert(self):
         self.dt = datetime.now(tz=None)
@@ -273,6 +282,21 @@ class Controller:
                                   self.pageGestorAddF.listaEstacionamento.get(ANCHOR))
             self.pageGestorAddF.clearEntrys()
             self.pageGestorAddF.canvasGestorAddEmp.itemconfigure("successmsg", state="normal")
+
+    def addParking(self):
+        self.pageGestorAddE.canvasGestorAddE.itemconfigure("successmsg", state="hidden")
+        if self.pageGestorAddE.entryPName.get() == "" or self.pageGestorAddE.entryCPCar.get() == ""\
+                or self.pageGestorAddE.entryCPBike.get() == "" or self.pageGestorAddE.entryCPTruck.get() == ""\
+                or self.pageGestorAddE.entryTax.get() == "":
+            self.pageGestorAddE.showError("Preencha todos os campos!")
+        elif self.user.verifyParking(self.pageGestorAddE.entryPName.get()) is True:
+            self.pageGestorAddE.showError("Já existe um estacionamento cadastrado com este nome!")
+        else:
+            self.user.addParking(self.pageGestorAddE.entryPName.get(), self.pageGestorAddE.entryCPCar.get(),
+                                 self.pageGestorAddE.entryCPBike.get(), self.pageGestorAddE.entryCPTruck.get(),
+                                 self.pageGestorAddE.entryTax.get())
+            self.pageGestorAddE.clearEntrys()
+            self.pageGestorAddE.canvasGestorAddE.itemconfigure("successmsg", state="normal")
 
 
 if __name__ == '__main__':
