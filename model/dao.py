@@ -15,8 +15,8 @@ def dictConta(user, password, accType):
     return dict(usuario=user, senha=password, tipo=accType)
 
 
-def dictFuncionario(accountid, parkingid, name, gender, cpf, phone):
-    return dict(idconta=accountid, idestacionamento=parkingid, nome=name, sexo=gender, cpf=cpf, telefone=phone)
+def dictFuncionario(accountid, parkingid, name, gender, cpf, phone, email):
+    return dict(idconta=accountid, idestacionamento=parkingid, nome=name, sexo=gender, cpf=cpf, telefone=phone, email=email)
 
 
 def dictEstacionamento(name, totalCar, totalMotorcycle, totalTruck, price, carSlots, motorcycleSlots, truckSlots):

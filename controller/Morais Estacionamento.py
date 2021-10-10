@@ -1,4 +1,5 @@
 from view.ViewLogin import *
+from view.ViewGestor import *
 from view.ViewFuncionario import *
 from model.Contas import *
 from datetime import datetime
@@ -10,6 +11,8 @@ class Controller:
         self.pageFuncionario = FuncionarioHome()
         self.pageFuncionarioCarIN = FuncionarioCarIN()
         self.pageFuncionarioCarOUT = FuncionarioCarOUT()
+        self.pageGestorHome = GestorHome()
+        self.pageGestorAddF = GestorAddF()
         self.user = Conta()
 
     def startApp(self):
@@ -22,7 +25,8 @@ class Controller:
         self.pageFuncionario.hideFuncionario()
         self.pageFuncionarioCarIN.hideFuncionarioCarIN()
         self.pageFuncionarioCarOUT.hideFuncionarioCarOUT()
-
+        self.pageGestorHome.hideGestorHome()
+        self.pageGestorAddF.hideGestorAddF()
 
     def btnConfigs(self):
         # Login
@@ -31,7 +35,7 @@ class Controller:
         # Funcionario Home
         app.pageFuncionario.btnCarIn.config(command=lambda: app.pageFuncionarioCarIN.showFuncionarioCarIN())
         app.pageFuncionario.btnCarOut.config(command=lambda: app.pageFuncionarioCarOUT.showFuncionarioCarOUT())
-        app.pageFuncionario.btnLogoutF.config(command=lambda: app.logoutF())
+        app.pageFuncionario.btnLogoutF.config(command=lambda: app.logout())
         app.pageFuncionario.btnRefreshData.config(command=lambda: app.loadFuncionarioHomeData())
 
         # Funcionario Adicionar Registro
@@ -44,6 +48,17 @@ class Controller:
         app.pageFuncionarioCarOUT.btnFindPlateOut.config(command=lambda: app.validateSearchPlate())
         app.pageFuncionarioCarOUT.btnConfirmExit.config(command=lambda: app.validateCarOUT())
 
+        # Gestor Home
+        app.pageGestorHome.btnLogoutG.config(command=lambda: app.logout())
+        app.pageGestorHome.btnAddEmployee.config(command=lambda: app.loadGestorAddF())
+        app.pageGestorHome.btnAddParking.config(command=lambda: app.logout())
+        app.pageGestorHome.btnManageParking.config(command=lambda: app.logout())
+        app.pageGestorHome.btnReports.config(command=lambda: app.logout())
+
+        # Gestor Add Funcionário
+        app.pageGestorAddF.btnReturn.config(command=lambda: app.returnGHome())
+        app.pageGestorAddF.btnAddFuncionario.config(command=lambda: app.addFuncionario())
+
     def validateLogin(self):
         if self.pageLogin.usernameEntry.get() == "" or self.pageLogin.passwordEntry.get() == "":
             self.pageLogin.loginError("IU")
@@ -54,12 +69,15 @@ class Controller:
             if self.user.accountData.tipo == "F":
                 self.loadFuncionarioHomeData()
                 self.pageFuncionario.showFuncionario()
+            elif self.user.accountData.tipo == "G":
+                self.loadGestorHomeData()
+                self.pageGestorHome.showGestorHome()
         elif self.user.login(self.pageLogin.usernameEntry.get(), self.pageLogin.passwordEntry.get()) is False:
             self.pageLogin.loginError("WU")
         else:
             self.pageLogin.loginError("")
 
-    def logoutF(self):
+    def logout(self):
         self.user.clearData()
         self.hideEverything()
         self.pageLogin.showLogin()
@@ -95,22 +113,30 @@ class Controller:
                                                                  text="R$ {}".format(self.user.parkingData.valor))
         self.pageFuncionario.canvasFuncionarioHome.itemconfigure("alerttitle",
                                                                  text="{}".format(self.user.parkingData.avisotitulo))
-        self.pageFuncionario.canvasFuncionarioHome.itemconfigure("alertmsg",
-                                                                 text="{}".format(self.user.parkingData.avisomsg))
+        self.pageFuncionario.alertBox.configure(state="normal")
+        self.pageFuncionario.alertBox.delete(1.0, 'end')
+        self.pageFuncionario.alertBox.insert(END, self.user.parkingData.avisomsg)
+        self.pageFuncionario.alertBox.configure(state="disabled")
 
     def loadFuncionarioINData(self, plate):
         self.vehicleInfo = self.user.getRegisterData(plate)
-        self.pageFuncionarioCarIN.canvasFuncionarioCarIN.itemconfigure("carplate", text="{}".format(self.vehicleInfo.placa), state="normal")
-        self.pageFuncionarioCarIN.canvasFuncionarioCarIN.itemconfigure("datetime", text="{:02d}:{:02d}:{:02d} - {:02d}/{:02d}/{}"
-                                                                       .format(self.vehicleInfo.dataentrada.hour,
-                                                                       self.vehicleInfo.dataentrada.minute,
-                                                                       self.vehicleInfo.dataentrada.second,
-                                                                       self.vehicleInfo.dataentrada.day,
-                                                                       self.vehicleInfo.dataentrada.month,
-                                                                       self.vehicleInfo.dataentrada.year),
+        self.pageFuncionarioCarIN.canvasFuncionarioCarIN.itemconfigure("carplate",
+                                                                       text="{}".format(self.vehicleInfo.placa),
                                                                        state="normal")
-        self.pageFuncionarioCarIN.canvasFuncionarioCarIN.itemconfigure("cartype", text="{}".format(self.vehicleInfo.tipo), state="normal")
-        self.pageFuncionarioCarIN.canvasFuncionarioCarIN.itemconfigure("employee", text="{}".format((self.user.getRegisterEmployeeName(self.vehicleInfo.idfuncionario))), state="normal")
+        self.pageFuncionarioCarIN.canvasFuncionarioCarIN.itemconfigure("datetime",
+                                                                       text="{:02d}:{:02d}:{:02d} - {:02d}/{:02d}/{}"
+                                                                       .format(self.vehicleInfo.dataentrada.hour,
+                                                                               self.vehicleInfo.dataentrada.minute,
+                                                                               self.vehicleInfo.dataentrada.second,
+                                                                               self.vehicleInfo.dataentrada.day,
+                                                                               self.vehicleInfo.dataentrada.month,
+                                                                               self.vehicleInfo.dataentrada.year),
+                                                                       state="normal")
+        self.pageFuncionarioCarIN.canvasFuncionarioCarIN.itemconfigure("cartype",
+                                                                       text="{}".format(self.vehicleInfo.tipo),
+                                                                       state="normal")
+        self.pageFuncionarioCarIN.canvasFuncionarioCarIN.itemconfigure("employee", text="{}".format(
+            (self.user.getRegisterEmployeeName(self.vehicleInfo.idfuncionario))), state="normal")
 
     def returnFHome(self):
         self.hideEverything()
@@ -118,6 +144,12 @@ class Controller:
         self.pageFuncionario.showFuncionario()
         self.pageFuncionarioCarIN.clearEntrys()
         self.pageFuncionarioCarOUT.clearEntrys()
+
+    def returnGHome(self):
+        self.hideEverything()
+        self.loadGestorHomeData()
+        self.pageGestorHome.showGestorHome()
+        self.pageGestorAddF.clearEntrys()
 
     def validateRecordInsert(self):
         self.dt = datetime.now(tz=None)
@@ -128,42 +160,49 @@ class Controller:
             self.pageFuncionarioCarIN.showError("A placa do veículo deve possuir 7 carácteres!")
 
         elif self.user.getAvailableSpace(self.user.parkingData.id, self.pageFuncionarioCarIN.comboType.get()) is True:
-            if self.user.insertRecord(self.user.parkingData.id, self.user.employeeData.id, self.pageFuncionarioCarIN.entryPlate.get(),
-                                        self.pageFuncionarioCarIN.comboType.get(), self.dt) is True:
+            if self.user.insertRecord(self.user.parkingData.id, self.user.employeeData.id,
+                                      self.pageFuncionarioCarIN.entryPlate.get(),
+                                      self.pageFuncionarioCarIN.comboType.get(), self.dt) is True:
                 self.pageFuncionarioCarIN.canvasFuncionarioCarIN.itemconfigure("sucessadd", state="normal")
                 self.loadFuncionarioINData(self.pageFuncionarioCarIN.entryPlate.get())
             else:
                 self.pageFuncionarioCarIN.showError("Este veículo já está dentro do estacionamento!")
         else:
             self.pageFuncionarioCarIN.showError("As vagas para este tipo de veículo esgotaram!")
-            
+
     def validateSearchPlate(self):
         self.vehicleInfo = self.user.getRegisterData(app.pageFuncionarioCarOUT.entryPlateOut.get())
         self.pageFuncionarioCarOUT.canvasFuncionarioCarOUT.itemconfigure("errormsg", text="")
         self.pageFuncionarioCarOUT.canvasFuncionarioCarOUT.itemconfigure("errorbg", state="hidden")
-        if self.pageFuncionarioCarOUT.entryPlateOut.get() == "" or len(self.pageFuncionarioCarOUT.entryPlateOut.get()) != 7:
+        if self.pageFuncionarioCarOUT.entryPlateOut.get() == "" or len(
+                self.pageFuncionarioCarOUT.entryPlateOut.get()) != 7:
             self.pageFuncionarioCarOUT.showError("Placa do veículo inválida!")
 
         elif self.vehicleInfo is None:
             self.pageFuncionarioCarOUT.showError("Veículo não encontrado!")
-        
+
         else:
             self.loadFuncionarioOUTData(self.vehicleInfo)
             self.pageFuncionarioCarOUT.entryPlateOut.config(state="disabled")
             self.pageFuncionarioCarOUT.btnFindPlateOut.config(state="disabled")
-            
+
     def loadFuncionarioOUTData(self, vehicleInfo):
-        self.pageFuncionarioCarOUT.canvasFuncionarioCarOUT.itemconfigure("carplate", text="{}".format(vehicleInfo.placa), state="normal")
-        self.pageFuncionarioCarOUT.canvasFuncionarioCarOUT.itemconfigure("datetime", text="{:02d}:{:02d}:{:02d} - {:02d}/{:02d}/{}"
-                                                                       .format(vehicleInfo.dataentrada.hour,
-                                                                       vehicleInfo.dataentrada.minute,
-                                                                       vehicleInfo.dataentrada.second,
-                                                                       vehicleInfo.dataentrada.day,
-                                                                       vehicleInfo.dataentrada.month,
-                                                                       vehicleInfo.dataentrada.year),
-                                                                       state="normal")
-        self.pageFuncionarioCarOUT.canvasFuncionarioCarOUT.itemconfigure("cartype", text="{}".format(vehicleInfo.tipo), state="normal")
-        self.pageFuncionarioCarOUT.canvasFuncionarioCarOUT.itemconfigure("employee", text="{}".format((self.user.getRegisterEmployeeName(self.vehicleInfo.idfuncionario))), state="normal")
+        self.pageFuncionarioCarOUT.canvasFuncionarioCarOUT.itemconfigure("carplate",
+                                                                         text="{}".format(vehicleInfo.placa),
+                                                                         state="normal")
+        self.pageFuncionarioCarOUT.canvasFuncionarioCarOUT.itemconfigure("datetime",
+                                                                         text="{:02d}:{:02d}:{:02d} - {:02d}/{:02d}/{}"
+                                                                         .format(vehicleInfo.dataentrada.hour,
+                                                                                 vehicleInfo.dataentrada.minute,
+                                                                                 vehicleInfo.dataentrada.second,
+                                                                                 vehicleInfo.dataentrada.day,
+                                                                                 vehicleInfo.dataentrada.month,
+                                                                                 vehicleInfo.dataentrada.year),
+                                                                         state="normal")
+        self.pageFuncionarioCarOUT.canvasFuncionarioCarOUT.itemconfigure("cartype", text="{}".format(vehicleInfo.tipo),
+                                                                         state="normal")
+        self.pageFuncionarioCarOUT.canvasFuncionarioCarOUT.itemconfigure("employee", text="{}".format(
+            (self.user.getRegisterEmployeeName(self.vehicleInfo.idfuncionario))), state="normal")
         self.pageFuncionarioCarOUT.btnConfirmExit.config(state="normal")
         self.pageFuncionarioCarOUT.btnClearInfo.config(state="normal")
 
@@ -171,21 +210,69 @@ class Controller:
         self.vehicleInfo = self.user.getRegisterData(app.pageFuncionarioCarOUT.entryPlateOut.get())
         self.dt = datetime.now(tz=None)
         self.elapsedtime = self.dt - self.vehicleInfo.dataentrada
-        self.price = (self.elapsedtime.total_seconds()/3600) * self.user.getParkingPrice(self.vehicleInfo.idestacionamento)
+        self.price = (self.elapsedtime.total_seconds() / 3600) * self.user.getParkingPrice(
+            self.vehicleInfo.idestacionamento)
         self.user.updateRecord(self.vehicleInfo, self.dt, self.price)
         self.user.updateSlot(self.vehicleInfo)
-        self.pageFuncionarioCarOUT.canvasFuncionarioCarOUT.itemconfigure("datetimeend", text="{:02d}:{:02d}:{:02d} - {:02d}/{:02d}/{}"
-                                                                       .format(self.dt.hour,
-                                                                       self.dt.minute,
-                                                                       self.dt.second,
-                                                                       self.dt.day,
-                                                                       self.dt.month,
-                                                                       self.dt.year),
-                                                                       state="normal")
-        self.pageFuncionarioCarOUT.canvasFuncionarioCarOUT.itemconfigure("elapsedtime", state="normal", text="{:.2f} hora(s)".format((self.elapsedtime.total_seconds()/3600)))
-        self.pageFuncionarioCarOUT.canvasFuncionarioCarOUT.itemconfigure("price", state="normal", text="R$ {:.2f}".format(self.price))
+        self.pageFuncionarioCarOUT.canvasFuncionarioCarOUT.itemconfigure("datetimeend",
+                                                                         text="{:02d}:{:02d}:{:02d} - {:02d}/{:02d}/{}"
+                                                                         .format(self.dt.hour,
+                                                                                 self.dt.minute,
+                                                                                 self.dt.second,
+                                                                                 self.dt.day,
+                                                                                 self.dt.month,
+                                                                                 self.dt.year),
+                                                                         state="normal")
+        self.pageFuncionarioCarOUT.canvasFuncionarioCarOUT.itemconfigure("elapsedtime", state="normal",
+                                                                         text="{:.2f} hora(s)".format(
+                                                                             (self.elapsedtime.total_seconds() / 3600)))
+        self.pageFuncionarioCarOUT.canvasFuncionarioCarOUT.itemconfigure("price", state="normal",
+                                                                         text="R$ {:.2f}".format(self.price))
         self.pageFuncionarioCarOUT.canvasFuncionarioCarOUT.itemconfigure("sucessmsg", state="normal")
         self.pageFuncionarioCarOUT.btnConfirmExit.config(state="disabled")
+
+    def loadGestorHomeData(self):
+        self.pageGestorHome.canvasGestorHome.itemconfigure("welcome",
+                                                           text="Olá, {}!".format(self.user.employeeData.nome))
+        self.pageGestorHome.canvasGestorHome.itemconfigure("nameG", text="{}".format(self.user.employeeData.nome))
+        self.pageGestorHome.canvasGestorHome.itemconfigure("cpf", text="{}".format(self.user.employeeData.cpf))
+        self.pageGestorHome.canvasGestorHome.itemconfigure("email",
+                                                           text="{}".format(self.user.employeeData.email))
+        self.pageGestorHome.canvasGestorHome.itemconfigure("phone",
+                                                           text="{}".format(self.user.employeeData.telefone))
+
+    def loadGestorAddF(self):
+        for index, item in enumerate(tableEstacionamentos):
+            self.pageGestorAddF.listaEstacionamento.insert(index, item.nome)
+        self.pageGestorAddF.showGestorAddF()
+
+    def addFuncionario(self):
+        self.pageGestorAddF.canvasGestorAddEmp.itemconfigure("successmsg", state="hidden")
+        if self.pageGestorAddF.userEntry.get() == "" or self.pageGestorAddF.passEntry.get() == "" \
+                or self.pageGestorAddF.entryName.get() == "" or self.pageGestorAddF.entryCPF.get() == "___.___.___-__" \
+                or self.pageGestorAddF.entryEmail.get() == "" or self.pageGestorAddF.entryPhone.get() == "(__)9____-____" \
+                or self.pageGestorAddF.comboGender.get() == "" or self.pageGestorAddF.entryCPF.get()[-1] == "_" \
+                or self.pageGestorAddF.entryPhone.get()[-1] == "_":
+            self.pageGestorAddF.showError("Todos os campos devem ser preenchidos.")
+
+        elif self.pageGestorAddF.listaEstacionamento.get(ANCHOR) == "":
+            self.pageGestorAddF.showError("Selecione o estacionamento que o funcionário vai trabalhar!")
+
+        elif self.user.verifyUsername(self.pageGestorAddF.userEntry.get()) is True:
+            self.pageGestorAddF.showError("Já existe uma conta com este usuário!")
+
+        elif self.user.verifyCPF(self.pageGestorAddF.entryCPF.get()) is True:
+            self.pageGestorAddF.showError("Já existe um funcionário com este CPF!")
+
+        else:
+            self.user.addEmployee(self.pageGestorAddF.userEntry.get(), self.pageGestorAddF.passEntry.get(),
+                                  self.pageGestorAddF.entryName.get(),
+                                  self.pageGestorAddF.entryCPF.get(), self.pageGestorAddF.entryEmail.get(),
+                                  self.pageGestorAddF.entryPhone.get(),
+                                  self.pageGestorAddF.comboGender.get(),
+                                  self.pageGestorAddF.listaEstacionamento.get(ANCHOR))
+            self.pageGestorAddF.clearEntrys()
+            self.pageGestorAddF.canvasGestorAddEmp.itemconfigure("successmsg", state="normal")
 
 
 if __name__ == '__main__':

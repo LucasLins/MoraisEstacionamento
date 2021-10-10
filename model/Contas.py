@@ -76,3 +76,28 @@ class Conta:
             return True
         return False
 
+    def verifyUsername(self, user):
+        self.data = tableContas.find_one(usuario=user)
+        if self.data != None:
+            return True
+        else:
+            return False
+
+    def verifyCPF(self, cpf):
+        self.data = tableFuncionarios.find_one(cpf=cpf)
+        if self.data != None:
+            return True
+        else:
+            return False
+
+    def getParkingID(self, name):
+        self.data = tableEstacionamentos.find_one(nome=name)
+        return self.data.id
+
+    def getAccountID(self, user):
+        self.data = tableContas.find_one(usuario=user)
+        return self.data.id
+
+    def addEmployee(self, username, password, name, cpf, email, phone, gender, parking):
+        tableContas.insert(dictConta(username, password, "F"))
+        tableFuncionarios.insert(dictFuncionario(self.getAccountID(username), self.getParkingID(parking), name, gender, cpf, phone, email))

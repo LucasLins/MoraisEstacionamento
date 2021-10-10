@@ -15,6 +15,7 @@
 import sys
 import re
 import calendar
+from tkinter.ttk import Style
 
 if sys.version[0]=='2':
     import Tkinter as tk
@@ -29,7 +30,7 @@ else:
     print("Python version not supported, try 2 or 3 versions")
 
 definitions = {
-    '9': '[0-9]',
+    '8': '[0-9]',
     'a': '[a-zA-Z]',
     'x': '[a-zA-z0-9]'
 }

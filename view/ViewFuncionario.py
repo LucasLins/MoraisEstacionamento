@@ -1,6 +1,5 @@
 from view.Configs import *
 
-
 class FuncionarioHome:
     def __init__(self):
         self.canvasFuncionarioHome = Canvas(
@@ -288,14 +287,20 @@ class FuncionarioHome:
             font=("Poppins SemiBold", 14 * -1)
         )
 
-        self.canvasFuncionarioHome.create_text(
-            155.0,
-            400.0,
-            tag="alertmsg",
-            anchor="nw",
-            text="Nenhum aviso no \nmomento.",
-            fill="#F44336",
-            font=("Poppins Regular", 14 * -1)
+        self.alertBox = Text(
+            self.canvasFuncionarioHome,
+            fg="#F44336",
+            bd=0,
+            bg="#FEECEB",
+            font=("Poppins Medium", 14 * -1),
+            highlightthickness=0,
+            state="disabled"
+        )
+        self.alertBox.place(
+            x=148.0,
+            y=402.0,
+            width=181.0,
+            height=135.0
         )
 
         self.canvasFuncionarioHome.create_text(
@@ -305,7 +310,7 @@ class FuncionarioHome:
             anchor="nw",
             text="Aviso",
             fill="#F44336",
-            font=("Poppins Medium", 16 * -1)
+            font=("Poppins Medium", 14)
         )
 
     def showFuncionario(self):
