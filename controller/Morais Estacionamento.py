@@ -14,6 +14,7 @@ class Controller:
         self.pageGestorHome = GestorHome()
         self.pageGestorAddF = GestorAddF()
         self.pageGestorAddE = GestorAddE()
+        self.pageGestorMngP = GestorManageP()
         self.user = Conta()
 
     def startApp(self):
@@ -29,6 +30,7 @@ class Controller:
         self.pageGestorHome.hideGestorHome()
         self.pageGestorAddF.hideGestorAddF()
         self.pageGestorAddE.hideGestorAddE()
+        self.pageGestorMngP.hideGestorMngP()
 
     def btnConfigs(self):
         # Login
@@ -54,7 +56,7 @@ class Controller:
         app.pageGestorHome.btnLogoutG.config(command=lambda: app.logout())
         app.pageGestorHome.btnAddEmployee.config(command=lambda: app.loadGestorAddF())
         app.pageGestorHome.btnAddParking.config(command=lambda: app.pageGestorAddE.showGestorAddE())
-        app.pageGestorHome.btnManageParking.config(command=lambda: app.logout())
+        app.pageGestorHome.btnManageParking.config(command=lambda: app.loadGestorMngP())
         app.pageGestorHome.btnReports.config(command=lambda: app.logout())
 
         # Gestor Add Funcionário
@@ -297,6 +299,14 @@ class Controller:
                                  self.pageGestorAddE.entryTax.get())
             self.pageGestorAddE.clearEntrys()
             self.pageGestorAddE.canvasGestorAddE.itemconfigure("successmsg", state="normal")
+
+    def loadGestorMngP(self):
+        for index, item in enumerate(tableEstacionamentos):
+            self.pageGestorMngP.listaEstacionamento.insert(index, item.nome)
+
+        self.pageGestorMngP.alertTitle.insert(0, "Título")
+        self.pageGestorMngP.alertmsgArea.insert(END, "Mensagem")
+        self.pageGestorMngP.showGestorMngP()
 
 
 if __name__ == '__main__':

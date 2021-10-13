@@ -496,7 +496,7 @@ class GestorAddF:
             image=self.image_image_13
         )
 
-        self.listaEstacionamento = Listbox(self.canvasGestorAddEmp, selectmode=SINGLE)
+        self.listaEstacionamento = Listbox(self.canvasGestorAddEmp, selectmode=SINGLE, bg="#E2F1FF", highlightthickness=0, bd=0)
         self.listaEstacionamento.place(x=148,y=213, width=230, height=285)
 
     def showGestorAddF(self):
@@ -791,3 +791,404 @@ class GestorAddE:
     def showError(self, message):
         self.canvasGestorAddE.itemconfigure("errorbg", state="normal")
         self.canvasGestorAddE.itemconfigure("errormsg", state="normal", text=message)
+        
+
+class GestorManageP:
+    def __init__(self):
+        self.canvasManageP = Canvas(
+            window,
+            bg="#FFFFFF",
+            height=768,
+            width=1280,
+            bd=0,
+            highlightthickness=0,
+            relief="ridge"
+        )
+
+        self.canvasManageP.place(x=0, y=0)
+        self.image_image_1 = PhotoImage(
+            file=relative_to_assets("mainbg.png"))
+        self.image_1 = self.canvasManageP.create_image(
+            640.0,
+            384.0,
+            image=self.image_image_1
+        )
+
+        self.image_image_2 = PhotoImage(
+            file=relative_to_assets("bg2.png"))
+        self.image_2 = self.canvasManageP.create_image(
+            640.0,
+            384.0,
+            image=self.image_image_2
+        )
+
+        self.image_image_3 = PhotoImage(
+            file=relative_to_assets("ManageParkingBG.png"))
+        self.image_3 = self.canvasManageP.create_image(
+            774.0,
+            302.0,
+            image=self.image_image_3
+        )
+
+        self.canvasManageP.create_text(
+            449.0,
+            60.0,
+            anchor="nw",
+            text="Atualizar dados",
+            fill="#413D4B",
+            font=("Poppins Regular", 24 * -1)
+        )
+
+        self.canvasManageP.create_text(
+            449.0,
+            204.0,
+            anchor="nw",
+            text="Publicar aviso",
+            fill="#413D4B",
+            font=("Poppins Regular", 24 * -1)
+        )
+
+        self.image_image_4 = PhotoImage(
+            file=relative_to_assets("entryBGNameE.png"))
+        self.image_4 = self.canvasManageP.create_image(
+            559.0,
+            154.0,
+            image=self.image_image_4
+        )
+
+        self.entry_image_1 = PhotoImage(
+            file=relative_to_assets("entryNameE.png"))
+        self.entry_bg_1 = self.canvasManageP.create_image(
+            559.0,
+            148.0,
+            image=self.entry_image_1
+        )
+        self.entryPName = Entry(
+            self.canvasManageP,
+            bd=0,
+            bg="#E2F1FF",
+            highlightthickness=0
+        )
+        self.entryPName.place(
+            x=449.0,
+            y=136.0,
+            width=220.0,
+            height=22.0
+        )
+
+        self.image_image_5 = PhotoImage(
+            file=relative_to_assets("entryBGCPC.png"))
+        self.image_5 = self.canvasManageP.create_image(
+            720.0,
+            154.0,
+            image=self.image_image_5
+        )
+
+        self.entry_image_2 = PhotoImage(
+            file=relative_to_assets("entryCPC.png"))
+        self.entry_bg_2 = self.canvasManageP.create_image(
+            720.5,
+            148.0,
+            image=self.entry_image_2
+        )
+        self.entryCPCar = Entry(
+            self.canvasManageP,
+            bd=0,
+            bg="#E2F1FF",
+            highlightthickness=0
+        )
+        self.entryCPCar.place(
+            x=688.0,
+            y=136.0,
+            width=65.0,
+            height=22.0
+        )
+
+        self.image_image_6 = PhotoImage(
+            file=relative_to_assets("entryBGCPB.png"))
+        self.image_6 = self.canvasManageP.create_image(
+            792.0,
+            154.0 + 3,
+            image=self.image_image_6
+        )
+
+        self.entry_image_3 = PhotoImage(
+            file=relative_to_assets("entryCPB.png"))
+        self.entry_bg_3 = self.canvasManageP.create_image(
+            792.5,
+            148.0,
+            image=self.entry_image_3
+        )
+        self.entryCPBike = Entry(
+            self.canvasManageP,
+            bd=0,
+            bg="#E2F1FF",
+            highlightthickness=0
+        )
+        self.entryCPBike.place(
+            x=760.0,
+            y=136.0,
+            width=65.0,
+            height=22.0
+        )
+
+        self.image_image_7 = PhotoImage(
+            file=relative_to_assets("entryBGCPT.png"))
+        self.image_7 = self.canvasManageP.create_image(
+            864.0,
+            154.0 + 3,
+            image=self.image_image_7
+        )
+
+        self.entry_image_4 = PhotoImage(
+            file=relative_to_assets("entryCPT.png"))
+        self.entry_bg_4 = self.canvasManageP.create_image(
+            864.5,
+            148.0,
+            image=self.entry_image_4
+        )
+        self.entryCPTruck = Entry(
+            self.canvasManageP,
+            bd=0,
+            bg="#E2F1FF",
+            highlightthickness=0
+        )
+        self.entryCPTruck.place(
+            x=832.0,
+            y=136.0,
+            width=65.0,
+            height=22.0
+        )
+
+        self.image_image_8 = PhotoImage(
+            file=relative_to_assets("entryBGTax.png"))
+        self.image_8 = self.canvasManageP.create_image(
+            948.0,
+            154.0 + 1,
+            image=self.image_image_8
+        )
+
+        self.entry_image_5 = PhotoImage(
+            file=relative_to_assets("entryTax.png"))
+        self.entry_bg_5 = self.canvasManageP.create_image(
+            948.0,
+            148.0,
+            image=self.entry_image_5
+        )
+        self.entryTax = Entry(
+            self.canvasManageP,
+            bd=0,
+            bg="#E2F1FF",
+            highlightthickness=0
+        )
+        self.entryTax.place(
+            x=916.0,
+            y=136.0,
+            width=64.0,
+            height=22.0
+        )
+
+        self.entry_image_6 = PhotoImage(
+            file=relative_to_assets("alertTitle.png"))
+        self.entry_bg_6 = self.canvasManageP.create_image(
+            565.0,
+            290.0,
+            image=self.entry_image_6
+        )
+        self.alertTitle = Entry(
+            self.canvasManageP,
+            fg="#F44336",
+            bd=0,
+            bg="#FEECEB",
+            font=("Poppins Medium", 14),
+            highlightthickness=0
+        )
+        self.alertTitle.place(
+            x=491.0,
+            y=278.0,
+            width=148.0,
+            height=22.0
+        )
+
+        self.entry_image_7 = PhotoImage(
+            file=relative_to_assets("alertMsg.png"))
+        self.entry_bg_7 = self.canvasManageP.create_image(
+            548.5,
+            374.5,
+            image=self.entry_image_7
+        )
+        self.alertmsgArea = Text(
+            self.canvasManageP,
+            fg="#F44336",
+            bd=0,
+            bg="#FEECEB",
+            font=("Poppins Medium", 14 * -1),
+            highlightthickness=0
+        )
+        self.alertmsgArea.place(
+            x=458.0,
+            y=306.0,
+            width=181.0,
+            height=135.0
+        )
+
+        self.image_image_9 = PhotoImage(
+            file=relative_to_assets("parkingListBg.png"))
+        self.image_9 = self.canvasManageP.create_image(
+            264.0,
+            343.0,
+            image=self.image_image_9
+        )
+
+        self.button_image_1 = PhotoImage(
+            file=relative_to_assets("btnUpdateParking.png"))
+        self.btnUpdateParking = Button(
+            self.canvasManageP,
+            image=self.button_image_1,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: print("button_1 clicked"),
+            relief="flat"
+        )
+        self.btnUpdateParking.place(
+            x=1060.0,
+            y=114.0,
+            width=60.0,
+            height=60.0
+        )
+
+        self.button_image_2 = PhotoImage(
+            file=relative_to_assets("btnAddNotice.png"))
+        self.btnAddNotice = Button(
+            self.canvasManageP,
+            image=self.button_image_2,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: print("button_2 clicked"),
+            relief="flat"
+        )
+        self.btnAddNotice.place(
+            x=676.0,
+            y=328.0,
+            width=60.0,
+            height=60.0
+        )
+
+        self.button_image_3 = PhotoImage(
+            file=relative_to_assets("btnLoadParking.png"))
+        self.btnLoadParking = Button(
+            self.canvasManageP,
+            image=self.button_image_3,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: print("button_3 clicked"),
+            relief="flat"
+        )
+        self.btnLoadParking.place(
+            x=198.0,
+            y=476.0,
+            width=62.0,
+            height=64.0
+        )
+
+        self.button_image_4 = PhotoImage(
+            file=relative_to_assets("btnClearPInfo.png"))
+        self.btnClearInfo = Button(
+            self.canvasManageP,
+            image=self.button_image_4,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: print("button_4 clicked"),
+            relief="flat"
+        )
+        self.btnClearInfo.place(
+            x=267.0,
+            y=476.0,
+            width=62.0,
+            height=64.0
+        )
+
+        self.button_image_5 = PhotoImage(
+            file=relative_to_assets("btnReturnMngE.png"))
+        self.btnReturnMngE = Button(
+            self.canvasManageP,
+            image=self.button_image_5,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: print("button_5 clicked"),
+            relief="flat"
+        )
+        self.btnReturnMngE.place(
+            x=137.0,
+            y=60.0,
+            width=255.0,
+            height=76.0
+        )
+
+        self.image_image_10 = PhotoImage(
+            file=relative_to_assets("errorbg.png"))
+        self.image_10 = self.canvasManageP.create_image(
+            687.0,
+            510.0,
+            tag="errorbg",
+            state="hidden",
+            image=self.image_image_10
+        )
+
+        self.canvasManageP.create_text(
+            491.0,
+            501.0,
+            tag="errormsg",
+            state="hidden",
+            anchor="nw",
+            text="Erro",
+            fill="#852019",
+            font=("Poppins Regular", 14 * -1)
+        )
+
+        self.image_image_11 = PhotoImage(
+            file=relative_to_assets("successbg2.png"))
+        self.image_11 = self.canvasManageP.create_image(
+            687.0,
+            510.0,
+            tag="successbg",
+            state="hidden",
+            image=self.image_image_11
+        )
+
+        self.canvasManageP.create_text(
+            491.0,
+            501.0,
+            tag="successmsg",
+            state="hidden",
+            anchor="nw",
+            text="Estacionamento cadastrado com sucesso!",
+            fill="#176226",
+            font=("Poppins Regular", 14 * -1)
+        )
+
+        self.listaEstacionamento = Listbox(self.canvasManageP, selectmode=SINGLE, bg="#E2F1FF", highlightthickness=0, bd=0)
+        self.listaEstacionamento.place(x=148, y=203-5, width=230, height=265)
+        
+    def hideGestorMngP(self):
+        self.canvasManageP.place_forget()
+
+    def showGestorMngP(self):
+        self.canvasManageP.place(x=0,y=0)
+
+    def clearEntrys(self):
+        self.entryPName.delete(0, 'end')
+        self.entryCPCar.delete(0, 'end')
+        self.entryCPBike.delete(0, 'end')
+        self.entryCPTruck.delete(0, 'end')
+        self.entryTax.delete(0, 'end')
+        self.canvasManageP.itemconfigure("successbg", state="hidden")
+        self.canvasManageP.itemconfigure("successmsg", state="hidden")
+        self.canvasManageP.itemconfigure("errormsg", state="hidden")
+        self.canvasManageP.itemconfigure("errorbg", state="hidden")
+
+    def showError(self, message):
+        self.canvasManageP.itemconfigure("errorbg", state="normal")
+        self.canvasManageP.itemconfigure("errormsg", state="normal", text=message)
+        
+        
