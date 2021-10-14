@@ -714,7 +714,6 @@ class GestorAddE:
             image=self.button_image_1,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_1 clicked"),
             relief="flat"
         )
         self.btnAddE.place(
@@ -1186,9 +1185,44 @@ class GestorManageP:
         self.canvasManageP.itemconfigure("successmsg", state="hidden")
         self.canvasManageP.itemconfigure("errormsg", state="hidden")
         self.canvasManageP.itemconfigure("errorbg", state="hidden")
+        self.alertTitle.delete(0, END)
+        self.alertmsgArea.delete(1.0, END)
+        self.listaEstacionamento.delete(0, "end")
 
     def showError(self, message):
         self.canvasManageP.itemconfigure("errorbg", state="normal")
         self.canvasManageP.itemconfigure("errormsg", state="normal", text=message)
+
+    def showSuccess(self, message):
+        self.canvasManageP.itemconfigure("successbg", state="normal")
+        self.canvasManageP.itemconfigure("successmsg", state="normal", text=message)
+
+    def disableEntrys(self):
+        self.btnLoadParking.config(state="normal")
+        self.listaEstacionamento.config(state="normal")
+        self.entryPName.config(state="disabled")
+        self.entryCPCar.config(state="disabled")
+        self.entryCPBike.config(state="disabled")
+        self.entryCPTruck.config(state="disabled")
+        self.entryTax.config(state="disabled")
+        self.alertTitle.config(state="disabled")
+        self.alertmsgArea.config(state="disabled")
+        self.btnUpdateParking.config(state="disabled")
+        self.btnAddNotice.config(state="disabled")
+        self.btnClearInfo.config(state="disabled")
+        
+    def enableEntrys(self):
+        self.btnLoadParking.config(state="disabled")
+        self.listaEstacionamento.config(state="disabled")
+        self.entryPName.config(state="normal")
+        self.entryCPCar.config(state="normal")
+        self.entryCPBike.config(state="normal")
+        self.entryCPTruck.config(state="normal")
+        self.entryTax.config(state="normal")
+        self.alertTitle.config(state="normal")
+        self.alertmsgArea.config(state="normal")
+        self.btnUpdateParking.config(state="normal")
+        self.btnAddNotice.config(state="normal")
+        self.btnClearInfo.config(state="normal")
         
         

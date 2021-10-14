@@ -67,6 +67,12 @@ class Controller:
         app.pageGestorAddE.btnReturnAddE.config(command=lambda: app.returnGHome())
         app.pageGestorAddE.btnAddE.config(command=lambda: app.addParking())
 
+        # Gestor Gerenciar Estacionamento
+        app.pageGestorMngP.btnReturnMngE.config(command=lambda: app.returnGHome())
+        app.pageGestorMngP.btnLoadParking.config(command=lambda: app.loadParkingData())
+        app.pageGestorMngP.btnClearInfo.config(command=lambda: app.loadGestorMngP())
+        app.pageGestorMngP.btnUpdateParking.config(command=lambda: app.btnUpdateParking())
+        app.pageGestorMngP.btnAddNotice.config(command=lambda: app.btnSendNotice())
 
     def validateLogin(self):
         if self.pageLogin.usernameEntry.get() == "" or self.pageLogin.passwordEntry.get() == "":
@@ -160,7 +166,7 @@ class Controller:
         self.pageGestorHome.showGestorHome()
         self.pageGestorAddF.clearEntrys()
         self.pageGestorAddE.clearEntrys()
-
+        self.pageGestorMngP.clearEntrys()
 
     def validateRecordInsert(self):
         self.dt = datetime.now(tz=None)
@@ -301,12 +307,64 @@ class Controller:
             self.pageGestorAddE.canvasGestorAddE.itemconfigure("successmsg", state="normal")
 
     def loadGestorMngP(self):
+        self.pageGestorMngP.clearEntrys()
         for index, item in enumerate(tableEstacionamentos):
             self.pageGestorMngP.listaEstacionamento.insert(index, item.nome)
 
         self.pageGestorMngP.alertTitle.insert(0, "Título")
         self.pageGestorMngP.alertmsgArea.insert(END, "Mensagem")
+        self.pageGestorMngP.disableEntrys()
         self.pageGestorMngP.showGestorMngP()
+
+    def loadParkingData(self):
+        if self.pageGestorMngP.listaEstacionamento.get(ANCHOR) != "":
+            self.pageGestorMngP.enableEntrys()
+            self.pageGestorMngP.alertTitle.delete(0, END)
+            self.pageGestorMngP.alertmsgArea.delete(1.0, END)
+            self.data = self.user.getParkingData(self.pageGestorMngP.listaEstacionamento.get(ANCHOR))
+            self.pageGestorMngP.entryPName.insert(0, self.data.nome)
+            self.pageGestorMngP.entryCPCar.insert(0, self.data.totalcarro)
+            self.pageGestorMngP.entryCPBike.insert(0, self.data.totalmoto)
+            self.pageGestorMngP.entryCPTruck.insert(0, self.data.totalcaminhao)
+            self.pageGestorMngP.entryTax.insert(0, self.data.valor)
+            self.pageGestorMngP.alertTitle.insert(0, self.data.avisotitulo)
+            self.pageGestorMngP.alertmsgArea.insert(1.0, self.data.avisomsg)
+
+    def btnUpdateParking(self):
+        self.pageGestorMngP.canvasManageP.itemconfigure("successmsg", state="hidden")
+        self.pageGestorMngP.canvasManageP.itemconfigure("successbg", state="hidden")
+
+        self.data = self.user.getParkingData(self.pageGestorMngP.listaEstacionamento.get(ANCHOR))
+        self.parkedCars = self.data.totalcarro - self.data.vagascarro
+        self.parkedBikes = self.data.totalmoto - self.data.vagasmoto
+        self.parkedTrucks = self.data.totalcaminhao - self.data.vagascaminhao
+        self.newCarSlots = (int(self.pageGestorMngP.entryCPCar.get()) - self.data.totalcarro) + self.data.vagascarro
+        self.newBikeSlots = (int(self.pageGestorMngP.entryCPBike.get()) - self.data.totalmoto) + self.data.vagasmoto
+        self.newTruckSlots = (int(self.pageGestorMngP.entryCPTruck.get()) - self.data.totalcaminhao) + self.data.vagasmoto
+
+        if self.pageGestorMngP.entryPName.get() == "" or self.pageGestorMngP.entryCPCar.get() == "" \
+                or self.pageGestorMngP.entryCPBike.get() == "" or self.pageGestorMngP.entryCPTruck.get() == "" \
+                or self.pageGestorMngP.entryTax.get() == "":
+            self.pageGestorMngP.showError("Preencha todos os campos!")
+        elif self.pageGestorMngP.listaEstacionamento.get(ANCHOR) != self.pageGestorMngP.entryPName.get() and self.user.verifyParking(self.pageGestorMngP.entryPName.get()) is True:
+            self.pageGestorMngP.showError("Já existe um estacionamento cadastrado com este nome!")
+        elif int(self.pageGestorMngP.entryCPCar.get()) < self.parkedCars:
+            self.pageGestorMngP.showError("Há mais carros estacionados do que a capacidade!")
+        elif int(self.pageGestorMngP.entryCPBike.get()) < self.parkedBikes:
+            self.pageGestorMngP.showError("Há mais motos estacionados do que a capacidade!")
+        elif int(self.pageGestorMngP.entryCPTruck.get()) < self.parkedTrucks:
+            self.pageGestorMngP.showError("Há mais caminhões estacionados do que a capacidade!")
+        else:
+            self.user.updateParking(self.data.id, self.pageGestorMngP.entryPName.get(), self.pageGestorMngP.entryCPCar.get(),
+                                    self.pageGestorMngP.entryCPBike.get(), self.pageGestorMngP.entryCPTruck.get(),
+                                    self.pageGestorMngP.entryTax.get(), self.newCarSlots, self.newBikeSlots, self.newTruckSlots)
+            self.pageGestorMngP.listaEstacionamento.config(state="normal")
+            self.loadGestorMngP()
+            self.pageGestorMngP.showSuccess("Estacionamento atualizado com sucesso!")
+
+    def btnSendNotice(self):
+        self.user.sendNotice(self.user.getParkingID(self.pageGestorMngP.listaEstacionamento.get(ANCHOR)), self.pageGestorMngP.alertTitle.get(), self.pageGestorMngP.alertmsgArea.get(1.0, END))
+        self.pageGestorMngP.showSuccess("Noticia publicada com sucesso!")
 
 
 if __name__ == '__main__':

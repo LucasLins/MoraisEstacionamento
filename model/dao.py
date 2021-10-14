@@ -24,6 +24,14 @@ def dictEstacionamento(name, totalCar, totalMotorcycle, totalTruck, price, carSl
                 vagascarro=carSlots, vagasmoto=motorcycleSlots, vagascaminhao=truckSlots)
 
 
+def dictUpdateEstacionamento(id, name, totalCar, totalMotorcycle, totalTruck, price, carSlots, motorcycleSlots, truckSlots):
+    return dict(id=id, nome=name, totalcarro=totalCar, totalmoto=totalMotorcycle, totalcaminhao=totalTruck, valor=price,
+                vagascarro=carSlots, vagasmoto=motorcycleSlots, vagascaminhao=truckSlots)
+
+def dictSendNotice(id, title, text):
+    return dict(id=id, avisotitulo=title, avisomsg=text)
+
+
 def dictRegistroEntrada(parkingId, employeeId, vehiclePlate, vehicleType, inDate):
     return dict(idestacionamento=parkingId, idfuncionario=employeeId, placa=vehiclePlate, tipo=vehicleType,
                 dataentrada=inDate, pago=False)

@@ -111,3 +111,13 @@ class Conta:
 
     def addParking(self, name, cpC, cpB, cpT, tax):
         tableEstacionamentos.insert(dictEstacionamento(name, cpC, cpB, cpT, tax, cpC, cpB, cpT))
+
+    def getParkingData(self, name):
+        return tableEstacionamentos.find_one(nome=name)
+
+    def updateParking(self, id, name, cpC, cpB, cpT, tax, ncpC, ncpB, ncpT):
+        tableEstacionamentos.update(dictUpdateEstacionamento(id, name, cpC, cpB, cpT, tax, ncpC, ncpB, ncpT), ["id"])
+
+    def sendNotice(self, id, title, text):
+        tableEstacionamentos.update(dictSendNotice(id, title, text), ["id"])
+
