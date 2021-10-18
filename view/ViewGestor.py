@@ -1,5 +1,7 @@
 from view.Configs import *
 
+#style = Style('cosmo')
+
 class GestorHome:
     def __init__(self):
         self.canvasGestorHome = Canvas(
@@ -356,7 +358,7 @@ class GestorAddF:
             x=449.0,
             y=400.0,
             width=220.0,
-            height=22.0
+            height=30.0
         )
 
         self.entry_image_5 = PhotoImage(
@@ -397,9 +399,9 @@ class GestorAddF:
         )
         self.entryPhone.place(
             x=706.0,
-            y=332.0,
+            y=328.0,
             width=220.0,
-            height=22.0
+            height=30.0
         )
 
         self.image_image_10 = PhotoImage(
@@ -420,9 +422,9 @@ class GestorAddF:
         )
         self.entryCPF.place(
             x=706.0,
-            y=264.0,
+            y=264.0 - 4,
             width=220.0,
-            height=22.0
+            height=30.0
         )
 
         self.button_image_1 = PhotoImage(
@@ -1224,5 +1226,138 @@ class GestorManageP:
         self.btnUpdateParking.config(state="normal")
         self.btnAddNotice.config(state="normal")
         self.btnClearInfo.config(state="normal")
+        
+
+class GestorRelatorios:
+    def __init__(self):
+        self.canvasGestorRelatorio = Canvas(
+            window,
+            bg="#FFFFFF",
+            height=768,
+            width=1280,
+            bd=0,
+            highlightthickness=0,
+            relief="ridge"
+        )
+
+        self.image_image_1 = PhotoImage(
+            file=relative_to_assets("mainbg.png"))
+        self.image_1 = self.canvasGestorRelatorio.create_image(
+            640.0,
+            384.0,
+            image=self.image_image_1
+        )
+
+        self.image_image_2 = PhotoImage(
+            file=relative_to_assets("bg2.png"))
+        self.image_2 = self.canvasGestorRelatorio.create_image(
+            640.0,
+            384.0,
+            image=self.image_image_2
+        )
+
+        self.image_image_3 = PhotoImage(
+            file=relative_to_assets("bgRelatorio.png"))
+        self.image_3 = self.canvasGestorRelatorio.create_image(
+            774.0,
+            384.0,
+            image=self.image_image_3
+        )
+
+        self.canvasGestorRelatorio.create_text(
+            449.0,
+            60.0,
+            anchor="nw",
+            text="Relatório do dia",
+            fill="#413D4B",
+            font=("Poppins Regular", 24 * -1)
+        )
+
+        self.image_image_4 = PhotoImage(
+            file=relative_to_assets("parkingListBg.png"))
+        self.image_4 = self.canvasGestorRelatorio.create_image(
+            264.0,
+            343.0,
+            image=self.image_image_4
+        )
+
+        self.button_image_1 = PhotoImage(
+            file=relative_to_assets("btnRelatorioGeral.png"))
+        self.btnRelatorioFull = Button(
+            self.canvasGestorRelatorio,
+            image=self.button_image_1,
+            borderwidth=0,
+            highlightthickness=0,
+            relief="flat"
+        )
+        self.btnRelatorioFull.place(
+            x=136.0,
+            y=556.0,
+            width=255.0,
+            height=76.0
+        )
+
+        self.button_image_2 = PhotoImage(
+            file=relative_to_assets("btnLoadParking.png"))
+        self.btnLoadRelatorio = Button(
+            self.canvasGestorRelatorio,
+            image=self.button_image_2,
+            borderwidth=0,
+            highlightthickness=0,
+            relief="flat"
+        )
+        self.btnLoadRelatorio.place(
+            x=198.0,
+            y=476.0,
+            width=62.0,
+            height=64.0
+        )
+
+        self.button_image_3 = PhotoImage(
+            file=relative_to_assets("btnClearPInfo.png"))
+        self.btnClearRelatorio = Button(
+            self.canvasGestorRelatorio,
+            image=self.button_image_3,
+            borderwidth=0,
+            highlightthickness=0,
+            relief="flat"
+        )
+        self.btnClearRelatorio.place(
+            x=267.0,
+            y=476.0,
+            width=62.0,
+            height=64.0
+        )
+
+        self.button_image_4 = PhotoImage(
+            file=relative_to_assets("btnReturnRelatorio.png"))
+        self.btnReturnRelatorio = Button(
+            self.canvasGestorRelatorio,
+            image=self.button_image_4,
+            borderwidth=0,
+            highlightthickness=0,
+            relief="flat"
+        )
+        self.btnReturnRelatorio.place(
+            x=137.0,
+            y=60.0,
+            width=255.0,
+            height=76.0
+        )
+
+        self.listaEstacionamento = Listbox(self.canvasGestorRelatorio, selectmode=SINGLE, bg="#E2F1FF", highlightthickness=0, bd=0)
+        self.listaEstacionamento.place(x=148, y=203 - 5, width=230, height=265)
+
+        self.m1 = Meter(master=self.canvasGestorRelatorio, metersize=180, padding=20, amountused=25, metertype='semi', labeltext='miles per hour', interactive=False)
+        self.m1.place(x=0, y=0)
+
+    def showGestorRelatorios(self):
+        self.canvasGestorRelatorio.place(x=0,y=0)
+
+    def hideGestorRelatorios(self):
+        self.canvasGestorRelatorio.place_forget()
+
+    def clearEntrys(self):
+        self.listaEstacionamento.delete(0, "end")
         
         

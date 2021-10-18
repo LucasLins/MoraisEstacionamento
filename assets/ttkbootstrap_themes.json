@@ -1,0 +1,24 @@
+{
+	"themes": [
+		{
+			"name": "morais",
+			"font": "Roboto 10",
+			"type": "light",
+			"colors": {
+				"primary": "#E2F1FF",
+				"secondary": "#E2F1FF",
+				"success": "#18bc9c",
+				"info": "#3498db",
+				"warning": "#f39c12",
+				"danger": "#e74c3c",
+				"bg": "#E2F1FF",
+				"fg": "#212529",
+				"selectbg": "#BBDEFB",
+				"selectfg": "#212529",
+				"border": "#ced4da",
+				"inputfg": "#212529",
+				"inputbg": "#E2F1FF"
+			}
+		}
+	]
+}

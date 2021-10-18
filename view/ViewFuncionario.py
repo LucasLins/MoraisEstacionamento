@@ -412,7 +412,7 @@ class FuncionarioCarIN:
             x=706.0,
             y=136.0,
             width=220.0,
-            height=22.0
+            height=30.0
         )
 
         self.button_image_1 = PhotoImage(

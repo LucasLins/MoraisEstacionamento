@@ -15,6 +15,7 @@ class Controller:
         self.pageGestorAddF = GestorAddF()
         self.pageGestorAddE = GestorAddE()
         self.pageGestorMngP = GestorManageP()
+        self.pageGestorRelatorios = GestorRelatorios()
         self.user = Conta()
 
     def startApp(self):
@@ -31,6 +32,7 @@ class Controller:
         self.pageGestorAddF.hideGestorAddF()
         self.pageGestorAddE.hideGestorAddE()
         self.pageGestorMngP.hideGestorMngP()
+        self.pageGestorRelatorios.hideGestorRelatorios()
 
     def btnConfigs(self):
         # Login
@@ -57,7 +59,7 @@ class Controller:
         app.pageGestorHome.btnAddEmployee.config(command=lambda: app.loadGestorAddF())
         app.pageGestorHome.btnAddParking.config(command=lambda: app.pageGestorAddE.showGestorAddE())
         app.pageGestorHome.btnManageParking.config(command=lambda: app.loadGestorMngP())
-        app.pageGestorHome.btnReports.config(command=lambda: app.logout())
+        app.pageGestorHome.btnReports.config(command=lambda: app.loadGestorRelatorios())
 
         # Gestor Add Funcionário
         app.pageGestorAddF.btnReturn.config(command=lambda: app.returnGHome())
@@ -73,6 +75,9 @@ class Controller:
         app.pageGestorMngP.btnClearInfo.config(command=lambda: app.loadGestorMngP())
         app.pageGestorMngP.btnUpdateParking.config(command=lambda: app.btnUpdateParking())
         app.pageGestorMngP.btnAddNotice.config(command=lambda: app.btnSendNotice())
+
+        # Gestor Relatórios
+        app.pageGestorRelatorios.btnReturnRelatorio.config(command=lambda: app.returnGHome())
 
     def validateLogin(self):
         if self.pageLogin.usernameEntry.get() == "" or self.pageLogin.passwordEntry.get() == "":
@@ -365,6 +370,12 @@ class Controller:
     def btnSendNotice(self):
         self.user.sendNotice(self.user.getParkingID(self.pageGestorMngP.listaEstacionamento.get(ANCHOR)), self.pageGestorMngP.alertTitle.get(), self.pageGestorMngP.alertmsgArea.get(1.0, END))
         self.pageGestorMngP.showSuccess("Noticia publicada com sucesso!")
+
+    def loadGestorRelatorios(self):
+        self.pageGestorRelatorios.clearEntrys()
+        for index, item in enumerate(tableEstacionamentos):
+            self.pageGestorRelatorios.listaEstacionamento.insert(index, item.nome)
+        self.pageGestorRelatorios.showGestorRelatorios()
 
 
 if __name__ == '__main__':
