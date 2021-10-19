@@ -1226,8 +1226,9 @@ class GestorManageP:
         self.btnUpdateParking.config(state="normal")
         self.btnAddNotice.config(state="normal")
         self.btnClearInfo.config(state="normal")
-        
 
+
+# noinspection PyTypeChecker
 class GestorRelatorios:
     def __init__(self):
         self.canvasGestorRelatorio = Canvas(
@@ -1320,6 +1321,7 @@ class GestorRelatorios:
             image=self.button_image_3,
             borderwidth=0,
             highlightthickness=0,
+            state="disabled",
             relief="flat"
         )
         self.btnClearRelatorio.place(
@@ -1348,8 +1350,29 @@ class GestorRelatorios:
         self.listaEstacionamento = Listbox(self.canvasGestorRelatorio, selectmode=SINGLE, bg="#E2F1FF", highlightthickness=0, bd=0)
         self.listaEstacionamento.place(x=148, y=203 - 5, width=230, height=265)
 
-        self.m1 = Meter(master=self.canvasGestorRelatorio, metersize=180, padding=20, amountused=25, metertype='semi', labeltext='miles per hour', interactive=False)
-        self.m1.place(x=0, y=0)
+        self.mCar = Meter(master=self.canvasGestorRelatorio, metersize=180, amountused=0, amounttotal=100, padding=20,
+                        metertype='semi', labeltext='Carros', textappend='/100', interactive=False, stripethickness=10,
+                        meterstyle='info.TMeter')
+        self.mBike = Meter(master=self.canvasGestorRelatorio, metersize=180, amountused=0, amounttotal=100, padding=20,
+                        metertype='semi', labeltext='Motos', textappend='/100', interactive=False, stripethickness=5,
+                        meterstyle='info.TMeter')
+        self.mTruck = Meter(master=self.canvasGestorRelatorio, metersize=180, amountused=0, amounttotal=100, padding=20,
+                        metertype='semi', labeltext='Caminhões', textappend='/100', interactive=False, stripethickness=15,
+                        meterstyle='info.TMeter')
+        self.mCar.place(x=480 - 21, y=100)
+        self.mBike.place(x=685 - 21, y=100)
+        self.mTruck.place(x=890 - 21, y=100)
+
+        self.mRecords = Meter(master=self.canvasGestorRelatorio, metersize=180, amountused=0, amounttotal=100, padding=20,
+                              labeltext='Registros', textappend='Veículos', interactive=False, stripethickness=10,
+                              meterstyle='danger.TMeter')
+        self.mTotalCP = Meter(master=self.canvasGestorRelatorio, metersize=180, amountused=0, amounttotal=100, padding=20,
+                              stripethickness=2, labeltext='Lotação', textappend='%', interactive=False, meterstyle='warning.TMeter')
+        self.mRevenue = Meter(master=self.canvasGestorRelatorio, metersize=180, amountused=0, amounttotal=100, padding=20,
+                              labeltext='Receita', textappend='R$', interactive=False, stripethickness=5, meterstyle='success.TMeter')
+        self.mRecords.place(x=480 - 21, y=300)
+        self.mTotalCP.place(x=685 - 21, y=300)
+        self.mRevenue.place(x=890 - 21, y=300)
 
     def showGestorRelatorios(self):
         self.canvasGestorRelatorio.place(x=0,y=0)
@@ -1359,5 +1382,63 @@ class GestorRelatorios:
 
     def clearEntrys(self):
         self.listaEstacionamento.delete(0, "end")
+        self.mCar = Meter(master=self.canvasGestorRelatorio, metersize=180, amountused=0, amounttotal=100, padding=20,
+                          metertype='semi', labeltext='Carros', textappend='/100', interactive=False,
+                          stripethickness=10,
+                          meterstyle='info.TMeter')
+        self.mBike = Meter(master=self.canvasGestorRelatorio, metersize=180, amountused=0, amounttotal=100, padding=20,
+                           metertype='semi', labeltext='Motos', textappend='/100', interactive=False, stripethickness=5,
+                           meterstyle='info.TMeter')
+        self.mTruck = Meter(master=self.canvasGestorRelatorio, metersize=180, amountused=0, amounttotal=100, padding=20,
+                            metertype='semi', labeltext='Caminhões', textappend='/100', interactive=False,
+                            stripethickness=15,
+                            meterstyle='info.TMeter')
+        self.mCar.place(x=480 - 21, y=100)
+        self.mBike.place(x=685 - 21, y=100)
+        self.mTruck.place(x=890 - 21, y=100)
+
+        self.mRecords = Meter(master=self.canvasGestorRelatorio, metersize=180, amountused=0, amounttotal=100,
+                              padding=20,
+                              labeltext='Registros', textappend='Veículos', interactive=False, stripethickness=10,
+                              meterstyle='danger.TMeter')
+        self.mTotalCP = Meter(master=self.canvasGestorRelatorio, metersize=180, amountused=0, amounttotal=100,
+                              padding=20,
+                              stripethickness=2, labeltext='Lotação', textappend='%', interactive=False,
+                              meterstyle='warning.TMeter')
+        self.mRevenue = Meter(master=self.canvasGestorRelatorio, metersize=180, amountused=0, amounttotal=100,
+                              padding=20,
+                              labeltext='Receita', textappend='R$', interactive=False, stripethickness=5,
+                              meterstyle='success.TMeter')
+        self.mRecords.place(x=480 - 21, y=300)
+        self.mTotalCP.place(x=685 - 21, y=300)
+        self.mRevenue.place(x=890 - 21, y=300)
+
+    def loadMeters(self, usedCar, totalCar, usedBike, totalBike, usedTruck, totalTruck, records, capacity, revenue):
+
+        self.mCar = Meter(master=self.canvasGestorRelatorio, metersize=180, amountused=usedCar, amounttotal=totalCar, padding=20,
+                          metertype='semi', labeltext='Carros', textappend=f'/{totalCar}', interactive=False, stripethickness=10,
+                          meterstyle='info.TMeter')
+        self.mBike = Meter(master=self.canvasGestorRelatorio, metersize=180, amountused=usedBike, amounttotal=totalBike, padding=20,
+                           metertype='semi', labeltext='Motos', textappend=f'/{totalBike}', interactive=False, stripethickness=5,
+                           meterstyle='info.TMeter')
+        self.mTruck = Meter(master=self.canvasGestorRelatorio, metersize=180, amountused=usedTruck, amounttotal=totalTruck, padding=20,
+                            metertype='semi', labeltext='Caminhões', textappend=f'/{totalTruck}', interactive=False, stripethickness=15,
+                            meterstyle='info.TMeter')
+        self.mCar.place(x=480 - 21, y=100)
+        self.mBike.place(x=685 - 21, y=100)
+        self.mTruck.place(x=890 - 21, y=100)
+
+        self.mRecords = Meter(master=self.canvasGestorRelatorio, metersize=180, amountused=records, amounttotal=records+1,
+                              padding=20, labeltext='Registros', textappend='Veículos', interactive=False, stripethickness=10,
+                              meterstyle='danger.TMeter')
+        self.mTotalCP = Meter(master=self.canvasGestorRelatorio, metersize=180, amountused=f'{capacity:.0f}', amounttotal=100,
+                              padding=20, stripethickness=2, labeltext='Lotação', textappend='%', interactive=False,
+                              meterstyle='warning.TMeter')
+        self.mRevenue = Meter(master=self.canvasGestorRelatorio, metersize=180, amountused=f'{revenue:.1f}', amounttotal=revenue+1,
+                              padding=20, labeltext='Receita', textappend='R$', interactive=False, stripethickness=5,
+                              meterstyle='success.TMeter')
+        self.mRecords.place(x=480 - 21, y=300)
+        self.mTotalCP.place(x=685 - 21, y=300)
+        self.mRevenue.place(x=890 - 21, y=300)
         
         

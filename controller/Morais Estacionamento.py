@@ -78,6 +78,8 @@ class Controller:
 
         # Gestor Relatórios
         app.pageGestorRelatorios.btnReturnRelatorio.config(command=lambda: app.returnGHome())
+        app.pageGestorRelatorios.btnLoadRelatorio.config(command=lambda: app.loadMeterData())
+        app.pageGestorRelatorios.btnClearRelatorio.config(command=lambda: app.btnClearMeters())
 
     def validateLogin(self):
         if self.pageLogin.usernameEntry.get() == "" or self.pageLogin.passwordEntry.get() == "":
@@ -377,6 +379,33 @@ class Controller:
             self.pageGestorRelatorios.listaEstacionamento.insert(index, item.nome)
         self.pageGestorRelatorios.showGestorRelatorios()
 
+    def loadMeterData(self):
+        if self.pageGestorRelatorios.listaEstacionamento.get(ANCHOR) == "":
+            pass
+        else:
+            self.pageGestorRelatorios.btnLoadRelatorio.config(state="disabled")
+            self.data = self.user.getParkingData(self.pageGestorRelatorios.listaEstacionamento.get(ANCHOR))
+            self.recordsData = self.user.getRecordsByParkingID(self.data['id'])
+            self.revenue = 0
+            self.records = 0
+            self.pageGestorRelatorios.btnClearRelatorio.config(state="normal")
+
+            # Cálculos
+            for record in self.recordsData:
+                self.revenue += record['valorpagar']
+                self.records += 1
+            self.usedCar = self.data['totalcarro'] - self.data['vagascarro']
+            self.usedBike = self.data['totalmoto'] - self.data['vagasmoto']
+            self.usedTruck = self.data['totalcaminhao'] - self.data['vagascaminhao']
+            #self.records = len(list(self.recordsData))
+            self.capacity = ((self.usedCar + self.usedBike + self.usedTruck) * 100) / (self.data['vagascarro'] + self.data['vagasmoto'] + self.data['vagascaminhao'])
+            self.pageGestorRelatorios.loadMeters(self.usedCar, self.data['totalcarro'], self.usedBike, self.data['totalmoto'], self.usedTruck, self.data['totalcaminhao'],
+                                                 self.records, self.capacity, self.revenue)
+
+    def btnClearMeters(self):
+        self.pageGestorRelatorios.clearEntrys()
+        self.pageGestorRelatorios.btnLoadRelatorio.config(state="normal")
+        self.loadGestorRelatorios()
 
 if __name__ == '__main__':
     app = Controller()

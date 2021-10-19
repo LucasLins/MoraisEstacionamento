@@ -121,3 +121,7 @@ class Conta:
     def sendNotice(self, id, title, text):
         tableEstacionamentos.update(dictSendNotice(id, title, text), ["id"])
 
+    def getRecordsByParkingID(self, id):
+        return tableRegistros.find(idestacionamento=id, pago=True)
+
+

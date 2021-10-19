@@ -6,7 +6,7 @@
 			"type": "light",
 			"colors": {
 				"primary": "#E2F1FF",
-				"secondary": "#E2F1FF",
+				"secondary": "#212529",
 				"success": "#18bc9c",
 				"info": "#3498db",
 				"warning": "#f39c12",
