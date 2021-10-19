@@ -1,3 +1,5 @@
+import webbrowser
+
 from view.ViewLogin import *
 from view.ViewGestor import *
 from view.ViewFuncionario import *
@@ -80,6 +82,7 @@ class Controller:
         app.pageGestorRelatorios.btnReturnRelatorio.config(command=lambda: app.returnGHome())
         app.pageGestorRelatorios.btnLoadRelatorio.config(command=lambda: app.loadMeterData())
         app.pageGestorRelatorios.btnClearRelatorio.config(command=lambda: app.btnClearMeters())
+        app.pageGestorRelatorios.btnRelatorioFull.config(command=lambda: app.btnFullReport())
 
     def validateLogin(self):
         if self.pageLogin.usernameEntry.get() == "" or self.pageLogin.passwordEntry.get() == "":
@@ -406,6 +409,11 @@ class Controller:
         self.pageGestorRelatorios.clearEntrys()
         self.pageGestorRelatorios.btnLoadRelatorio.config(state="normal")
         self.loadGestorRelatorios()
+
+    def btnFullReport(self):
+        webbrowser.open_new_tab('https://docs.google.com/spreadsheets/d/1m1kkVpsRF4z3jxf5eXWXAkbunY7C4nPt_BJbyrVXtPw/')
+        self.user.getFullReport(relative_to_assets('sheets.json'))
+
 
 if __name__ == '__main__':
     app = Controller()

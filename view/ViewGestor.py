@@ -732,7 +732,6 @@ class GestorAddE:
             image=self.button_image_2,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_2 clicked"),
             relief="flat"
         )
         self.btnReturnAddE.place(
@@ -1048,7 +1047,6 @@ class GestorManageP:
             image=self.button_image_1,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_1 clicked"),
             relief="flat"
         )
         self.btnUpdateParking.place(
@@ -1065,7 +1063,6 @@ class GestorManageP:
             image=self.button_image_2,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_2 clicked"),
             relief="flat"
         )
         self.btnAddNotice.place(
@@ -1082,7 +1079,6 @@ class GestorManageP:
             image=self.button_image_3,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_3 clicked"),
             relief="flat"
         )
         self.btnLoadParking.place(
@@ -1099,7 +1095,6 @@ class GestorManageP:
             image=self.button_image_4,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_4 clicked"),
             relief="flat"
         )
         self.btnClearInfo.place(
@@ -1116,7 +1111,6 @@ class GestorManageP:
             image=self.button_image_5,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_5 clicked"),
             relief="flat"
         )
         self.btnReturnMngE.place(

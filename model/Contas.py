@@ -124,4 +124,7 @@ class Conta:
     def getRecordsByParkingID(self, id):
         return tableRegistros.find(idestacionamento=id, pago=True)
 
+    def getFullReport(self, path):
+        gerarPlanilha(path)
+
 
