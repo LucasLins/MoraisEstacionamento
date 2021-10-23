@@ -1,6 +1,5 @@
 from view.Configs import *
 
-#style = Style('cosmo')
 
 class GestorHome:
     def __init__(self):

@@ -15,3 +15,16 @@
 * Cálculo de valor a pagar baseado no tempo de entrada e saída
 * Geração de recibo de pagamento
 * Geração de relatórios gerenciais
+
+### Screenshots:
+
+![IMG](https://cdn.discordapp.com/attachments/876298824082153517/901529970092933120/1.png)
+![IMG](https://cdn.discordapp.com/attachments/876298824082153517/901529972261421126/2.png)
+![IMG](https://cdn.discordapp.com/attachments/876298824082153517/901529974555672616/3.png)
+![IMG](https://cdn.discordapp.com/attachments/876298824082153517/901529976585748510/4.png)
+![IMG](https://cdn.discordapp.com/attachments/876298824082153517/901529979546910780/5.png)
+![IMG](https://cdn.discordapp.com/attachments/876298824082153517/901529980641611896/6.png)
+![IMG](https://cdn.discordapp.com/attachments/876298824082153517/901529982071894066/7.png)
+![IMG](https://cdn.discordapp.com/attachments/876298824082153517/901529981996371988/8.png)
+![IMG](https://cdn.discordapp.com/attachments/876298824082153517/901529983229526037/9.png)
+
