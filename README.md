@@ -15,6 +15,7 @@
 * Cálculo de valor a pagar baseado no tempo de entrada e saída
 * Geração de recibo de pagamento
 * Geração de relatórios gerenciais
+* Exportação de dados via Google Sheets
 
 ### Screenshots:
 
