@@ -392,9 +392,11 @@ class Controller:
             self.pageGestorRelatorios.btnClearRelatorio.config(state="normal")
 
             # Cálculos
+            self.dt = datetime.now(tz=None)
             for record in self.recordsData:
-                self.revenue += record['valorpagar']
-                self.records += 1
+                if record["datasaida"].year == self.dt.year and record["datasaida"].month == self.dt.month and record["datasaida"].day == self.dt.day:
+                    self.revenue += record['valorpagar']
+                    self.records += 1
             self.usedCar = self.data['totalcarro'] - self.data['vagascarro']
             self.usedBike = self.data['totalmoto'] - self.data['vagasmoto']
             self.usedTruck = self.data['totalcaminhao'] - self.data['vagascaminhao']
